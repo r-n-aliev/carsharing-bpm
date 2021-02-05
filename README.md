@@ -8,11 +8,14 @@
 `nashorn.args=--no-deprecation-warning`
 
 ### Ручное тестирование 
-1. Запустить Application
+1. Запустить **Application**
 
-2. Выполнить запрос `rest-req/start-process.http` <p/>
-<small>Прим: Если его же запустить повторно сразу - получим ошибку, содержащую текст `Process for this carID is already running`</small>
-3. Результат: В консоли приложения будут сменяться значения `processStatus`
+2. Выполнить запрос `rest-req/start-process.http`<p/>
+<small>Прим: Если этот же запрос выполнить повторно сразу - получим ошибку, содержащую текст `Process for this carID is already running`</small><p/>
+ Можно также выполнить `rest-req/start-process-DEBUG.http`, запустив тот же процесс, но с debug-формами.
+ Debug-формы это пустые user-task, благодаря которым процесс будет останавливаться - до отжатия кнопки _Complete_ в `Tasklist` - и его будет удобнее анализировать в `Cockpit`)
+
+3. Результат: В консоли приложения будут сменяться значения `processStatus` и логироваться запросы к мокам.
 
 #### Изменение ответов замокированных сервисов
 Закомментив/раскоментив url-ы сервисов в конфиге `conf/bpm.properties` и запустив **новый** процесс,
