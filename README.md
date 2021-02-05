@@ -1,4 +1,5 @@
 # carsharing-bpm
+![alt text](./carsharing_update_firmware_process.png)
 
 ### Перед запуском приложения
 Опционально (чтобы избавиться от повторяющегося warning о _Nashorn JS engine_):
