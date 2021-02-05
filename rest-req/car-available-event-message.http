@@ -1,0 +1,9 @@
+POST http://localhost:8080/engine-rest/message
+Content-Type: application/json
+
+{
+  "messageName": "CAR_AVAILABLE_EVENT",
+  "businessKey": 10000000000101
+}
+
+###

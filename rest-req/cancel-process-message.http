@@ -1,0 +1,9 @@
+POST http://localhost:8080/engine-rest/message
+Content-Type: application/json
+
+{
+  "messageName": "CANCEL_PROCESS",
+  "businessKey": 10000000000101
+}
+
+###

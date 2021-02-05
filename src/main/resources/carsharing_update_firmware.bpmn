@@ -1,0 +1,862 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" id="Definitions_1xf5ypr" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.6.0">
+  <bpmn:message id="Message_0wcqvla" name="CAR_AVAILABLE_EVENT" />
+  <bpmn:message id="Message_0aiuf43" name="CANCEL_PROCESS" />
+  <bpmn:collaboration id="Collaboration_0h3741w">
+    <bpmn:participant id="Participant_06roecr" name="Обновление прошивки автомобиля" processRef="CarsharingUpdateFirmware" />
+  </bpmn:collaboration>
+  <bpmn:process id="CarsharingUpdateFirmware" name="Carsharing - update firmware" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_1tbh4a2">
+      <bpmn:lane id="Lane_0yeuqqx" name="Верхнеуровневый процесс">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_18sjqsk</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_02p2ts3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_04gzuqq</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1f1h2fx</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0xhjdeo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_18zgk37</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1kzcvki</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_17twwg9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0oit5lh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1ef5frv</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_0ileelb" name="Проверка состояния">
+        <bpmn:flowNodeRef>Event_022fbgo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0y5aqa8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_1dwsw4f</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_06i7v1k</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_054ne8v</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_05rc0pw</bpmn:flowNodeRef>
+        <bpmn:childLaneSet id="LaneSet_1j0vao3" />
+      </bpmn:lane>
+      <bpmn:lane id="Lane_1haapvn" name="Резервирование">
+        <bpmn:flowNodeRef>Event_0zqua70</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0imlk51</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0ajgfo1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1h91oll</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_13ffg2c</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1gly0pp</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_186oq2g</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0kb0ck9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1gddhgb</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0j90qj3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_18jyst7</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_02zwezr" name="Команда посигналить">
+        <bpmn:flowNodeRef>Event_0caupx4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_083gezh</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1do2nbd</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_17eprt8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0op0zob</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1yk114n</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_0viifoc</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:sequenceFlow id="Flow_0kyo97t" sourceRef="Event_02p2ts3" targetRef="Event_04gzuqq" />
+    <bpmn:sequenceFlow id="Flow_1rv5eot" sourceRef="Gateway_18sjqsk" targetRef="Event_02p2ts3" />
+    <bpmn:sequenceFlow id="Flow_1ht7fv3" sourceRef="StartEvent_1" targetRef="Gateway_18sjqsk" />
+    <bpmn:sequenceFlow id="Flow_0g0z33d" sourceRef="Gateway_18sjqsk" targetRef="Event_0oit5lh" />
+    <bpmn:sequenceFlow id="Flow_0uh5ofw" sourceRef="Event_022fbgo" targetRef="Activity_1dwsw4f" />
+    <bpmn:sequenceFlow id="Flow_03akiao" name="CAR_AVAILABLE" sourceRef="Gateway_0y5aqa8" targetRef="Event_05rc0pw">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${carState == 'CAR_AVAILABLE'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1vypxae" sourceRef="Activity_1dwsw4f" targetRef="Gateway_06i7v1k" />
+    <bpmn:sequenceFlow id="Flow_0hm39bx" sourceRef="Event_1ef5frv" targetRef="Event_1f1h2fx" />
+    <bpmn:sequenceFlow id="Flow_01xvme8" sourceRef="Event_0xhjdeo" targetRef="Event_1kzcvki" />
+    <bpmn:sequenceFlow id="Flow_03p8nvk" sourceRef="Gateway_06i7v1k" targetRef="Gateway_0y5aqa8" />
+    <bpmn:sequenceFlow id="Flow_0dn9te4" name="CAR_IN_RENT или CAR_IN_SERVICE_MODE" sourceRef="Gateway_0y5aqa8" targetRef="Event_054ne8v">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${carState == 'CAR_IN_RENT' || carState == 'CAR_IN_SERVICE_MODE'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0kbgw9q" sourceRef="Event_054ne8v" targetRef="Gateway_06i7v1k" />
+    <bpmn:sequenceFlow id="Flow_0sivd2q" sourceRef="Event_17twwg9" targetRef="Event_18zgk37" />
+    <bpmn:sequenceFlow id="Flow_1twvl35" sourceRef="Event_0zqua70" targetRef="Activity_0imlk51" />
+    <bpmn:sequenceFlow id="Flow_0jpes1t" sourceRef="Event_13ffg2c" targetRef="Activity_0imlk51" />
+    <bpmn:sequenceFlow id="Flow_0e399ho" sourceRef="Activity_0imlk51" targetRef="Gateway_0ajgfo1" />
+    <bpmn:sequenceFlow id="Flow_12zfgpu" name="CAR_RESERVED" sourceRef="Gateway_0ajgfo1" targetRef="Event_0j90qj3">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${carState == 'CAR_RESERVED'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_189vfwu" name="Не удалось" sourceRef="Gateway_0ajgfo1" targetRef="Gateway_1h91oll" />
+    <bpmn:sequenceFlow id="Flow_1ivu8vx" name="CAR_IN_RENT" sourceRef="Gateway_1h91oll" targetRef="Event_13ffg2c">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${carState == 'CAR_IN_RENT'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1h6co4d" name="NO_SIGNAL" sourceRef="Gateway_1h91oll" targetRef="Gateway_1gly0pp">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${carState == 'NO_SIGNAL'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1tzroue" name="Нет" sourceRef="Gateway_1gly0pp" targetRef="Event_186oq2g" />
+    <bpmn:sequenceFlow id="Flow_0eqwdq9" name="RESERVE_ATTEMPTS_EXPIRED" sourceRef="Gateway_1gly0pp" targetRef="Activity_0kb0ck9">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ reserveAttemptsCount == MAX_RESERVE_ATTEMPTS }</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1de7tvm" sourceRef="Event_186oq2g" targetRef="Event_18jyst7" />
+    <bpmn:sequenceFlow id="Flow_0junieb" sourceRef="Activity_0kb0ck9" targetRef="Event_1gddhgb" />
+    <bpmn:sequenceFlow id="Flow_0km0r0z" sourceRef="Event_0caupx4" targetRef="Activity_083gezh" />
+    <bpmn:sequenceFlow id="Flow_08lrj37" sourceRef="Activity_083gezh" targetRef="Gateway_1do2nbd" />
+    <bpmn:sequenceFlow id="Flow_1pz29pk" name="SUCCESS" sourceRef="Gateway_1do2nbd" targetRef="Activity_17eprt8">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${commandResult == 'SUCCESS'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1i73xu0" name="NO_SIGNAL" sourceRef="Gateway_1do2nbd" targetRef="Activity_0op0zob">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${commandResult == 'NO_SIGNAL'}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0e35y58" sourceRef="Activity_17eprt8" targetRef="Gateway_1yk114n" />
+    <bpmn:sequenceFlow id="Flow_0douw6t" sourceRef="Activity_0op0zob" targetRef="Gateway_1yk114n" />
+    <bpmn:sequenceFlow id="Flow_1abusyb" sourceRef="Gateway_1yk114n" targetRef="Event_0viifoc" />
+    <bpmn:startEvent id="StartEvent_1" name="START" camunda:asyncAfter="true">
+      <bpmn:extensionElements>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">// --- Необязательный скрипт. Нужен лишь для адекватного exception message
+
+var bk = execution.getProcessBusinessKey();
+
+var instances = execution.getProcessEngineServices().getRuntimeService().createProcessInstanceQuery().processInstanceBusinessKey(bk).active().count();
+
+if (instances &gt; 0) {
+java.lang.System.out.println("\n &gt;&gt;&gt; ERR: Process for this carID is already running. \n");
+  throw "Process for this carID is already running.";
+}</camunda:script>
+        </camunda:executionListener>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">execution.setVariable("carID", execution.getProcessBusinessKey());
+execution.setVariable("reserveAttemptsCount", 0);
+
+// --- Не обязательная смена статуса - для наглядности:
+execution.setVariable("processStatus", "NEW");
+java.lang.System.out.println("&gt;&gt;&gt; processStatus: NEW"); // todo del</camunda:script>
+        </camunda:executionListener>
+        <camunda:executionListener class="ru.camunda_bpm.carsharing.delegate.PropertiesToExecutionDelegate" event="start" />
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1ht7fv3</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:intermediateCatchEvent id="Event_022fbgo" name="CHECK_STATE_START" camunda:asyncAfter="true">
+      <bpmn:outgoing>Flow_0uh5ofw</bpmn:outgoing>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_0kxq8tr" name="CHECK_STATE_START" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:parallelGateway id="Gateway_18sjqsk">
+      <bpmn:incoming>Flow_1ht7fv3</bpmn:incoming>
+      <bpmn:outgoing>Flow_1rv5eot</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0g0z33d</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:intermediateCatchEvent id="Event_02p2ts3" name="CANCEL_PROCESS">
+      <bpmn:incoming>Flow_1rv5eot</bpmn:incoming>
+      <bpmn:outgoing>Flow_0kyo97t</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1exmx7d" messageRef="Message_0aiuf43" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="Event_04gzuqq" name="END">
+      <bpmn:extensionElements>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">// --- Необязательный скрипт смены статуса - для наглядности
+java.lang.System.out.println("\n ||||||||||||||||      PROCESS COMPLETED     |||||||||||||||| \n"); // todo del</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0kyo97t</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_0rvc4bc" />
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_1f1h2fx" name="END">
+      <bpmn:extensionElements>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">// --- Необязательный скрипт смены статуса - для наглядности
+java.lang.System.out.println("\n ||||||||||||||||      PROCESS COMPLETED     |||||||||||||||| \n"); // todo del</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0hm39bx</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_09rgppv" />
+    </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="Event_0xhjdeo" name="RESERVING_END" camunda:asyncAfter="true">
+      <bpmn:extensionElements>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">// --- Необязательный скрипт смены статуса - для наглядности
+execution.setVariable("processStatus", "CAR_RESERVED");
+java.lang.System.out.println("&gt;&gt;&gt; processStatus: CAR_RESERVED"); // todo del</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_01xvme8</bpmn:outgoing>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_0orxl8k" name="RESERVING_END" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:exclusiveGateway id="Gateway_0y5aqa8" name="Какой статус машины?">
+      <bpmn:incoming>Flow_03p8nvk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dn9te4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_03akiao</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_1dwsw4f" name="[CarService] Check state" camunda:asyncBefore="true" camunda:asyncAfter="true">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">${URL_CAR_SERVICE_STATE}?carID=${carID}</camunda:inputParameter>
+            <camunda:inputParameter name="method">GET</camunda:inputParameter>
+            <camunda:outputParameter name="carState">
+              <camunda:script scriptFormat="javascript">java.lang.System.out.println("&gt;&gt;&gt; response :" + response); // todo del
+S(response).prop("state").value()</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+        <camunda:failedJobRetryTimeCycle>R3/PT1M</camunda:failedJobRetryTimeCycle>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">// --- Необязательный скрипт смены статуса - для наглядности
+execution.setVariable("processStatus", "CAR_CHECKING");
+java.lang.System.out.println("&gt;&gt;&gt; processStatus: CAR_CHECKING"); // todo del</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0uh5ofw</bpmn:incoming>
+      <bpmn:outgoing>Flow_1vypxae</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_06i7v1k">
+      <bpmn:incoming>Flow_1vypxae</bpmn:incoming>
+      <bpmn:incoming>Flow_0kbgw9q</bpmn:incoming>
+      <bpmn:outgoing>Flow_03p8nvk</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:intermediateCatchEvent id="Event_054ne8v" name="Ожидание события о доступности машины" camunda:asyncBefore="true" camunda:asyncAfter="true">
+      <bpmn:extensionElements>
+        <camunda:executionListener event="end">
+          <camunda:script scriptFormat="javascript">execution.setVariable("carState", "CAR_AVAILABLE");</camunda:script>
+        </camunda:executionListener>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">// --- Необязательный скрипт смены статуса - для наглядности
+execution.setVariable("processStatus", "WAITING_CAR");
+java.lang.System.out.println("&gt;&gt;&gt; processStatus: WAITING_CAR"); // todo del</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0dn9te4</bpmn:incoming>
+      <bpmn:outgoing>Flow_0kbgw9q</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1tq6qv1" messageRef="Message_0wcqvla" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateThrowEvent id="Event_18zgk37" name="Резервирование  RESERVING_START" camunda:asyncBefore="true">
+      <bpmn:incoming>Flow_0sivd2q</bpmn:incoming>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_13iunhx" name="RESERVING_START" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:intermediateThrowEvent id="Event_1kzcvki" name="Команда посигналить  HONK_HORN_START" camunda:asyncBefore="true">
+      <bpmn:incoming>Flow_01xvme8</bpmn:incoming>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_07lnes4" name="HONK_HORN_START" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:intermediateCatchEvent id="Event_0zqua70" name="RESERVING_START">
+      <bpmn:outgoing>Flow_1twvl35</bpmn:outgoing>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_15mmycw" name="RESERVING_START" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:serviceTask id="Activity_0imlk51" name="[CarService] Reserve" camunda:asyncBefore="true" camunda:asyncAfter="true">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">${URL_CAR_SERVICE_RESERVE}</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{
+  "carId": ${carID}
+}</camunda:inputParameter>
+            <camunda:outputParameter name="carState">
+              <camunda:script scriptFormat="javascript">java.lang.System.out.println("&gt;&gt;&gt; response :" + response); // todo del
+S(response).prop("state").value()</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+        <camunda:failedJobRetryTimeCycle>R3/PT1M</camunda:failedJobRetryTimeCycle>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">// --- Необязательный скрипт смены статуса - для наглядности
+execution.setVariable("processStatus", "CAR_RESERVING");
+java.lang.System.out.println("&gt;&gt;&gt; processStatus: CAR_RESERVING"); // todo del</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1twvl35</bpmn:incoming>
+      <bpmn:incoming>Flow_0jpes1t</bpmn:incoming>
+      <bpmn:outgoing>Flow_0e399ho</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_0ajgfo1" name="Удалось зарезервировать  ?" default="Flow_189vfwu">
+      <bpmn:incoming>Flow_0e399ho</bpmn:incoming>
+      <bpmn:outgoing>Flow_12zfgpu</bpmn:outgoing>
+      <bpmn:outgoing>Flow_189vfwu</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_1h91oll">
+      <bpmn:incoming>Flow_189vfwu</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ivu8vx</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1h6co4d</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:intermediateCatchEvent id="Event_13ffg2c" name="Ожидание события о доступности машины" camunda:asyncBefore="true" camunda:asyncAfter="true">
+      <bpmn:extensionElements>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">// --- Необязательный скрипт смены статуса - для наглядности
+execution.setVariable("processStatus", "WAITING_CAR");
+java.lang.System.out.println("&gt;&gt;&gt; processStatus: WAITING_CAR"); // todo del</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ivu8vx</bpmn:incoming>
+      <bpmn:outgoing>Flow_0jpes1t</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0omj5n9" messageRef="Message_0wcqvla" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:exclusiveGateway id="Gateway_1gly0pp" name="Количество попыток исчерпано?" default="Flow_1tzroue">
+      <bpmn:incoming>Flow_1h6co4d</bpmn:incoming>
+      <bpmn:outgoing>Flow_1tzroue</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0eqwdq9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:intermediateCatchEvent id="Event_186oq2g" name="Пауза между попытками (default = 5 min)" camunda:asyncBefore="true">
+      <bpmn:extensionElements>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">var reserveAttemptsCount = execution.getVariable("reserveAttemptsCount");
+execution.setVariable("reserveAttemptsCount", reserveAttemptsCount + 1);
+
+java.lang.System.out.println("&gt;&gt;&gt; reserveAttemptsCount = " + execution.getVariable("reserveAttemptsCount") + " / " + execution.getVariable("MAX_RESERVE_ATTEMPTS"));
+
+// --- Необязательный скрипт смены статуса - для наглядности
+execution.setVariable("processStatus", "RESERVE_ERROR");
+java.lang.System.out.println("&gt;&gt;&gt; processStatus: RESERVE_ERROR"); // todo del</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1tzroue</bpmn:incoming>
+      <bpmn:outgoing>Flow_1de7tvm</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0osdmin">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">${TIMER_RESERVE_ATTEMPTS_PAUSE}</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:serviceTask id="Activity_0kb0ck9" name="[EventBus] RESERVE_FAILED" camunda:asyncBefore="true" camunda:asyncAfter="true">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">${URL_EVENT_BUS_REST}</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{
+  "carId": ${carID},
+  "process": "firmware_update",
+  "event": "RESERVE_FAILED"
+}</camunda:inputParameter>
+            <camunda:outputParameter name="carState">
+              <camunda:script scriptFormat="javascript">// java.lang.System.out.println("&gt;&gt;&gt; response :" + response); // todo del
+// S(response).prop("state").value()</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+        <camunda:failedJobRetryTimeCycle>R3/PT1M</camunda:failedJobRetryTimeCycle>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">// --- Необязательный скрипт смены статуса - для наглядности
+execution.setVariable("processStatus", "RESERVE_FAILED");
+java.lang.System.out.println("&gt;&gt;&gt; processStatus: RESERVE_FAILED"); // todo del</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0eqwdq9</bpmn:incoming>
+      <bpmn:outgoing>Flow_0junieb</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_1gddhgb" name="END">
+      <bpmn:extensionElements>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">// --- Необязательный скрипт смены статуса - для наглядности
+java.lang.System.out.println("\n ||||||||||||||||      PROCESS COMPLETED     |||||||||||||||| \n"); // todo del</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0junieb</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_1rguhz0" />
+    </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="Event_0caupx4" name="HONK_HORN_START">
+      <bpmn:outgoing>Flow_0km0r0z</bpmn:outgoing>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_1utmi49" name="HONK_HORN_START" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:serviceTask id="Activity_083gezh" name="[Telematics] Honk Horn" camunda:asyncBefore="true" camunda:asyncAfter="true">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">${URL_TELEMATICS_SERVICE}</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{
+  "carId": ${carID},
+  "command": "honk_horn"
+}</camunda:inputParameter>
+            <camunda:outputParameter name="commandResult">
+              <camunda:script scriptFormat="javascript">java.lang.System.out.println("&gt;&gt;&gt; response :" + response); // todo del
+S(response).prop("result").value()</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+        <camunda:failedJobRetryTimeCycle>R3/PT1M</camunda:failedJobRetryTimeCycle>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">// --- Необязательный скрипт смены статуса - для наглядности
+execution.setVariable("processStatus", "HONK_HORN_COMMAND_EXECUTING");
+java.lang.System.out.println("&gt;&gt;&gt; processStatus: HONK_HORN_COMMAND_EXECUTING"); // todo del</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0km0r0z</bpmn:incoming>
+      <bpmn:outgoing>Flow_08lrj37</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_1do2nbd" name="Команда выполнена ?">
+      <bpmn:incoming>Flow_08lrj37</bpmn:incoming>
+      <bpmn:outgoing>Flow_1pz29pk</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1i73xu0</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_17eprt8" name="[EventBus] FINISHED" camunda:asyncBefore="true" camunda:asyncAfter="true">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">${URL_EVENT_BUS_REST}</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{
+  "carId": "${carID}",
+  "process": "firmware_update",
+  "event": "FINISHED"
+}</camunda:inputParameter>
+            <camunda:outputParameter name="carState">
+              <camunda:script scriptFormat="javascript">// java.lang.System.out.println("&gt;&gt;&gt; response :" + response); // todo del
+// S(response).prop("state").value()</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+        <camunda:failedJobRetryTimeCycle>R3/PT1M</camunda:failedJobRetryTimeCycle>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">// --- Необязательный скрипт смены статуса - для наглядности
+execution.setVariable("processStatus", "FINISHED");
+java.lang.System.out.println("&gt;&gt;&gt; processStatus: FINISHED"); // todo del</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1pz29pk</bpmn:incoming>
+      <bpmn:outgoing>Flow_0e35y58</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_0op0zob" name="[EventBus] FINISHED_WITH_FAIL" camunda:asyncBefore="true" camunda:asyncAfter="true">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="url">${URL_EVENT_BUS_REST}</camunda:inputParameter>
+            <camunda:inputParameter name="method">POST</camunda:inputParameter>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Content-Type">application/json</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="payload">{
+  "carId": "${carID}",
+  "process": "firmware_update",
+  "event": "FINISHED_WITH_FAIL"
+}</camunda:inputParameter>
+            <camunda:outputParameter name="carState">
+              <camunda:script scriptFormat="javascript">// java.lang.System.out.println("&gt;&gt;&gt; response :" + response); // todo del
+// S(response).prop("state").value()</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+        <camunda:failedJobRetryTimeCycle>R3/PT1M</camunda:failedJobRetryTimeCycle>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">// --- Необязательный скрипт смены статуса - для наглядности
+execution.setVariable("processStatus", "FINISHED_WITH_FAIL");
+java.lang.System.out.println("&gt;&gt;&gt; processStatus: FINISHED_WITH_FAIL"); // todo del</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1i73xu0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0douw6t</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_1yk114n">
+      <bpmn:incoming>Flow_0e35y58</bpmn:incoming>
+      <bpmn:incoming>Flow_0douw6t</bpmn:incoming>
+      <bpmn:outgoing>Flow_1abusyb</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:intermediateCatchEvent id="Event_17twwg9" name="CHECK_STATE_END">
+      <bpmn:extensionElements>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="javascript">// --- Необязательный скрипт смены статуса - для наглядности
+execution.setVariable("processStatus", "CAR_CHECKED");
+java.lang.System.out.println("&gt;&gt;&gt; processStatus: CAR_CHECKED"); // todo del</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0sivd2q</bpmn:outgoing>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_17jqk8i" name="CHECK_STATE_END" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateThrowEvent id="Event_0oit5lh" name="Проверка состояния CHECK_STATE_START" camunda:asyncBefore="true">
+      <bpmn:incoming>Flow_0g0z33d</bpmn:incoming>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_1r5z7nn" name="CHECK_STATE_START" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:intermediateCatchEvent id="Event_1ef5frv" name="HONK_HORN_END" camunda:asyncAfter="true">
+      <bpmn:outgoing>Flow_0hm39bx</bpmn:outgoing>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_1504o87" name="HONK_HORN_END" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateThrowEvent id="Event_05rc0pw" name="Машина доступна CHECK_STATE_END">
+      <bpmn:incoming>Flow_03akiao</bpmn:incoming>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_1dbgcw0" name="CHECK_STATE_END" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:intermediateThrowEvent id="Event_0j90qj3" name="Машина зарезервирована RESERVING_END">
+      <bpmn:documentation />
+      <bpmn:incoming>Flow_12zfgpu</bpmn:incoming>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_0qjata0" name="RESERVING_END" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:intermediateThrowEvent id="Event_18jyst7" name="Проверка состояния CHECK_STATE_START">
+      <bpmn:incoming>Flow_1de7tvm</bpmn:incoming>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_13553kh" name="CHECK_STATE_START" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:intermediateThrowEvent id="Event_0viifoc" name="HONK_HORN_END">
+      <bpmn:incoming>Flow_1abusyb</bpmn:incoming>
+      <bpmn:linkEventDefinition id="LinkEventDefinition_0vjuihg" name="HONK_HORN_END" />
+    </bpmn:intermediateThrowEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0h3741w">
+      <bpmndi:BPMNShape id="Participant_06roecr_di" bpmnElement="Participant_06roecr" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1880" height="1980" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="312" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="312" y="275" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1drc8nu_di" bpmnElement="Gateway_18sjqsk">
+        <dc:Bounds x="465" y="225" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01h0hdc_di" bpmnElement="Activity_1dwsw4f">
+        <dc:Bounds x="490" y="660" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1y3e8yk_di" bpmnElement="Event_054ne8v" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+        <dc:Bounds x="700" y="792" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="620" y="794" width="64" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0imlk51_di" bpmnElement="Activity_0imlk51">
+        <dc:Bounds x="490" y="1146" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0fta3uq_di" bpmnElement="Event_1f1h2fx">
+        <dc:Bounds x="1912" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1918" y="275" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0y5aqa8_di" bpmnElement="Gateway_0y5aqa8" isMarkerVisible="true">
+        <dc:Bounds x="841" y="675" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="833" y="636" width="66" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_050bkde_di" bpmnElement="Event_02p2ts3" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+        <dc:Bounds x="1172" y="372" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1149" y="415" width="83" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_00ehulc_di" bpmnElement="Event_04gzuqq">
+        <dc:Bounds x="1912" y="372" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1918" y="415" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0kyo97t_di" bpmnElement="Flow_0kyo97t">
+        <di:waypoint x="1208" y="390" />
+        <di:waypoint x="1912" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1rv5eot_di" bpmnElement="Flow_1rv5eot">
+        <di:waypoint x="490" y="275" />
+        <di:waypoint x="490" y="390" />
+        <di:waypoint x="1172" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dn9te4_di" bpmnElement="Flow_0dn9te4">
+        <di:waypoint x="866" y="725" />
+        <di:waypoint x="866" y="810" />
+        <di:waypoint x="736" y="810" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="880" y="753" width="80" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ht7fv3_di" bpmnElement="Flow_1ht7fv3">
+        <di:waypoint x="348" y="250" />
+        <di:waypoint x="465" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Lane_0yeuqqx_di" bpmnElement="Lane_0yeuqqx" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="1850" height="450" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0ileelb_di" bpmnElement="Lane_0ileelb" isHorizontal="true">
+        <dc:Bounds x="190" y="530" width="1850" height="440" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1haapvn_di" bpmnElement="Lane_1haapvn" isHorizontal="true">
+        <dc:Bounds x="190" y="970" width="1850" height="620" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0g0z33d_di" bpmnElement="Flow_0g0z33d">
+        <di:waypoint x="515" y="250" />
+        <di:waypoint x="599" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1jlpunu_di" bpmnElement="Event_0oit5lh" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
+        <dc:Bounds x="599" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="574" y="275" width="85" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0pvx1y9_di" bpmnElement="Event_022fbgo" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
+        <dc:Bounds x="322" y="682" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="298" y="725" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0uh5ofw_di" bpmnElement="Flow_0uh5ofw">
+        <di:waypoint x="358" y="700" />
+        <di:waypoint x="490" y="700" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0sucje6_di" bpmnElement="Event_05rc0pw">
+        <dc:Bounds x="1712" y="682" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1688" y="613" width="85" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1efwwy9_di" bpmnElement="Event_17twwg9">
+        <dc:Bounds x="743" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="719" y="302" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0sivd2q_di" bpmnElement="Flow_0sivd2q">
+        <di:waypoint x="779" y="250" />
+        <di:waypoint x="1018" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0cxp6bv_di" bpmnElement="Event_18zgk37" bioc:stroke="black" bioc:fill="white">
+        <dc:Bounds x="1018" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="994" y="282" width="85" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0yl9t6v_di" bpmnElement="Event_0xhjdeo">
+        <dc:Bounds x="1152" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1131" y="296" width="79" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1lasf24_di" bpmnElement="Event_0zqua70" bioc:stroke="black" bioc:fill="white">
+        <dc:Bounds x="342" y="1168" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="318" y="1211" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1twvl35_di" bpmnElement="Flow_1twvl35">
+        <di:waypoint x="378" y="1186" />
+        <di:waypoint x="490" y="1186" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Gateway_0ajgfo1_di" bpmnElement="Gateway_0ajgfo1" isMarkerVisible="true">
+        <dc:Bounds x="841" y="1161" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="821" y="1109" width="90" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0e399ho_di" bpmnElement="Flow_0e399ho">
+        <di:waypoint x="590" y="1186" />
+        <di:waypoint x="841" y="1186" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12zfgpu_di" bpmnElement="Flow_12zfgpu">
+        <di:waypoint x="891" y="1186" />
+        <di:waypoint x="1712" y="1186" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="938" y="1159" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0zx0mha_di" bpmnElement="Event_0j90qj3">
+        <dc:Bounds x="1712" y="1168" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1691" y="1096" width="79" height="66" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_01xvme8_di" bpmnElement="Flow_01xvme8">
+        <di:waypoint x="1188" y="250" />
+        <di:waypoint x="1457" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_16lw9en_di" bpmnElement="Event_1kzcvki" bioc:stroke="black" bioc:fill="white">
+        <dc:Bounds x="1457" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1430" y="280" width="84" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_02zwezr_di" bpmnElement="Lane_02zwezr" isHorizontal="true">
+        <dc:Bounds x="190" y="1590" width="1850" height="470" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0oivazz_di" bpmnElement="Event_0caupx4" bioc:stroke="black" bioc:fill="white">
+        <dc:Bounds x="342" y="1756" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="318" y="1799" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0iej52w_di" bpmnElement="Event_1ef5frv" bioc:stroke="black" bioc:fill="white">
+        <dc:Bounds x="1595" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1571" y="308" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0hm39bx_di" bpmnElement="Flow_0hm39bx">
+        <di:waypoint x="1631" y="250" />
+        <di:waypoint x="1912" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_13ffg2c_di" bpmnElement="Event_13ffg2c" bioc:stroke="rgb(67, 160, 71)" bioc:fill="rgb(200, 230, 201)">
+        <dc:Bounds x="700" y="1271" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="686" y="1319" width="64" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_189vfwu_di" bpmnElement="Flow_189vfwu">
+        <di:waypoint x="866" y="1211" />
+        <di:waypoint x="866" y="1264" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="873" y="1238" width="59" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0jpes1t_di" bpmnElement="Flow_0jpes1t">
+        <di:waypoint x="700" y="1289" />
+        <di:waypoint x="540" y="1289" />
+        <di:waypoint x="540" y="1226" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03akiao_di" bpmnElement="Flow_03akiao">
+        <di:waypoint x="891" y="700" />
+        <di:waypoint x="1712" y="700" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="956" y="676" width="88" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Gateway_06i7v1k_di" bpmnElement="Gateway_06i7v1k" isMarkerVisible="true">
+        <dc:Bounds x="693" y="675" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_03p8nvk_di" bpmnElement="Flow_03p8nvk">
+        <di:waypoint x="743" y="700" />
+        <di:waypoint x="841" y="700" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vypxae_di" bpmnElement="Flow_1vypxae">
+        <di:waypoint x="590" y="700" />
+        <di:waypoint x="693" y="700" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Gateway_1h91oll_di" bpmnElement="Gateway_1h91oll" isMarkerVisible="true">
+        <dc:Bounds x="841" y="1264" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1ivu8vx_di" bpmnElement="Flow_1ivu8vx">
+        <di:waypoint x="841" y="1289" />
+        <di:waypoint x="736" y="1289" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="757" y="1265" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1h6co4d_di" bpmnElement="Flow_1h6co4d">
+        <di:waypoint x="891" y="1289" />
+        <di:waypoint x="1065" y="1289" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="891" y="1265" width="63" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0iljrv5_di" bpmnElement="Event_186oq2g">
+        <dc:Bounds x="1332" y="1271" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1311" y="1220" width="80" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1gly0pp_di" bpmnElement="Gateway_1gly0pp" isMarkerVisible="true">
+        <dc:Bounds x="1065" y="1264" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1060" y="1219" width="60" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1tzroue_di" bpmnElement="Flow_1tzroue">
+        <di:waypoint x="1115" y="1289" />
+        <di:waypoint x="1332" y="1289" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1214" y="1271" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0eqwdq9_di" bpmnElement="Flow_0eqwdq9">
+        <di:waypoint x="1090" y="1314" />
+        <di:waypoint x="1090" y="1396" />
+        <di:waypoint x="1300" y="1396" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1100" y="1414" width="86" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0b8lszh_di" bpmnElement="Event_1gddhgb">
+        <dc:Bounds x="1902" y="1378" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1908" y="1421" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1de7tvm_di" bpmnElement="Flow_1de7tvm">
+        <di:waypoint x="1368" y="1289" />
+        <di:waypoint x="1712" y="1289" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0qbpl5n_di" bpmnElement="Event_18jyst7" bioc:stroke="rgb(251, 140, 0)" bioc:fill="rgb(255, 224, 178)">
+        <dc:Bounds x="1712" y="1271" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1688" y="1314" width="85" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kb0ck9_di" bpmnElement="Activity_0kb0ck9">
+        <dc:Bounds x="1300" y="1356" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0junieb_di" bpmnElement="Flow_0junieb">
+        <di:waypoint x="1400" y="1396" />
+        <di:waypoint x="1902" y="1396" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Gateway_1do2nbd_di" bpmnElement="Gateway_1do2nbd" isMarkerVisible="true">
+        <dc:Bounds x="845" y="1749" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="837" y="1710" width="66" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_083gezh_di" bpmnElement="Activity_083gezh">
+        <dc:Bounds x="490" y="1734" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_08lrj37_di" bpmnElement="Flow_08lrj37">
+        <di:waypoint x="590" y="1774" />
+        <di:waypoint x="845" y="1774" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0km0r0z_di" bpmnElement="Flow_0km0r0z">
+        <di:waypoint x="378" y="1774" />
+        <di:waypoint x="490" y="1774" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pz29pk_di" bpmnElement="Flow_1pz29pk">
+        <di:waypoint x="895" y="1774" />
+        <di:waypoint x="1300" y="1774" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="917" y="1756" width="54" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_017m9og_di" bpmnElement="Event_0viifoc">
+        <dc:Bounds x="1712" y="1756" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1689" y="1801" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_17eprt8_di" bpmnElement="Activity_17eprt8">
+        <dc:Bounds x="1300" y="1734" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0e35y58_di" bpmnElement="Flow_0e35y58">
+        <di:waypoint x="1400" y="1774" />
+        <di:waypoint x="1485" y="1774" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_0op0zob_di" bpmnElement="Activity_0op0zob">
+        <dc:Bounds x="1300" y="1854" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1yk114n_di" bpmnElement="Gateway_1yk114n" isMarkerVisible="true">
+        <dc:Bounds x="1485" y="1749" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1abusyb_di" bpmnElement="Flow_1abusyb">
+        <di:waypoint x="1535" y="1774" />
+        <di:waypoint x="1712" y="1774" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0douw6t_di" bpmnElement="Flow_0douw6t">
+        <di:waypoint x="1400" y="1894" />
+        <di:waypoint x="1510" y="1894" />
+        <di:waypoint x="1510" y="1799" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1i73xu0_di" bpmnElement="Flow_1i73xu0">
+        <di:waypoint x="870" y="1799" />
+        <di:waypoint x="870" y="1894" />
+        <di:waypoint x="1300" y="1894" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="912" y="1867" width="63" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0kbgw9q_di" bpmnElement="Flow_0kbgw9q">
+        <di:waypoint x="718" y="792" />
+        <di:waypoint x="718" y="725" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
